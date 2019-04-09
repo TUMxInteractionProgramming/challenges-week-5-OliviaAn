@@ -149,6 +149,20 @@ li.selected {
     border-left: 4px solid #3F51B5;
 }
 
+/* FAB */
+
+#fab {
+    height: 56px;
+    width: 56px;
+    min-width: 56px;
+    font-size: 24px;
+    position:absolute;
+    right: 16px;
+    bottom: calc(72px + 16px);
+    border-radius: 50%;
+    color: black;
+}
+
 /* TAB BAR */
 
 #tab-bar, #chat-bar {
@@ -158,15 +172,13 @@ li.selected {
     bottom: 0;
     width: 100%;
     display: flex;
+    height: 72px;
 }
 
-#tab-bar button, #chat-bar button {
-    background-color: white;
-    border: none;
-    font-size: 13px;
+#tab-bar button {
     width: 33%;
     height: 72px;
-    padding: 16px;
+    margin: 0px;
 
     /* flexify the buttons by growing them equally */
     flex-grow: 1;
@@ -199,7 +211,7 @@ li.selected {
     /* emoji menu */
     /* colors and borders */
     background-color:white;
-    border: 1px solid black;
+    /*border removed*/
 
     /* size & alignment */
     position: absolute;
@@ -268,6 +280,7 @@ li.selected {
 .message p {
     background-color: white;
     padding: 16px;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
 }
 
 .message button {
@@ -278,10 +291,64 @@ li.selected {
 
     /* right/bottom alignment of button */
     position: absolute;
-    right: 8px;
-    bottom: 8px;
+    right: 0px;
+    bottom: 0px;
+}
+
+button {
+    /* default button style */
+    height: 36px;
+    min-width: 64px;
+    font-size: 14px;
+    border-radius: 2px;
+    padding: 0 16px;
+    margin: 8px;
+
+    background-color: white;
+    color: black;
+    border: none;
+
+    text-transform: uppercase;
+}
+
+button.primary {
+    background-color: #3F51B5;
+    color:white;
+}
+
+button.accent {
+    background-color: #CDDC39;
+    color: black;
 }
 
 .message.own {
     margin-left: 17.5%;
+}
+/* shadows copied from Scott Roa (http://stackoverflow.com/a/37826207)*/
+.shadow--2dp {
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+}
+
+.shadow--3dp {
+    box-shadow: 0 3px 4px 0 rgba(0, 0, 0, 0.14), 0 3px 3px -2px rgba(0, 0, 0, 0.2), 0 1px 8px 0 rgba(0, 0, 0, 0.12);
+}
+
+.shadow--4dp {
+    box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+}
+
+.shadow--6dp {
+    box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12), 0 3px 5px -1px rgba(0, 0, 0, 0.2);
+}
+
+.shadow--8dp {
+    box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12), 0 5px 5px -3px rgba(0, 0, 0, 0.2);
+}
+
+.shadow--16dp {
+    box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14), 0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2);
+}
+
+.shadow--24dp {
+    box-shadow: 0 9px 46px 8px rgba(0, 0, 0, 0.14), 0 11px 15px -7px rgba(0, 0, 0, 0.12), 0 24px 38px 3px rgba(0, 0, 0, 0.2);
 }

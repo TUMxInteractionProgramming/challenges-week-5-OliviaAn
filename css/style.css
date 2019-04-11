@@ -163,6 +163,28 @@ li.selected {
     color: black;
 }
 
+#create-button {
+    display: none; 
+}
+
+#app-bar-create {
+    display: none;
+    align-items: center;
+    padding-right: 0;
+}
+
+#app-bar-create.show {
+    display: flex;}
+
+#app-bar-create input {
+    font-size: 20px;
+    border: none;
+    border-radius: 2px;
+    display: block;
+    flex-grow: 1;
+    margin-top: 3px;
+    padding: 4px;
+}
 /* TAB BAR */
 
 #tab-bar, #chat-bar {

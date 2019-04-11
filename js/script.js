@@ -1,6 +1,14 @@
 /* start the external action and say hello */
 console.log("App is alive");
 
+/* channels array*/
+var channels = [
+    yummy,
+    sevencontinents,
+    killerapp,
+    firstpersononmars,
+    octoberfest
+];
 
 /** #7 Create global variable */
 var currentChannel;
@@ -21,6 +29,8 @@ var currentLocation = {
  * @param channelObject
  */
 function switchChannel(channelObject) {
+
+    abortCreationMode();
     //Log the channel switch
     console.log("Tuning in to channel", channelObject);
 
@@ -79,7 +89,16 @@ function selectTab(tabId) {
  * toggle (show/hide) the emojis menu
  */
 function toggleEmojis() {
+
+
+    var emojis = require('emojis-list');
+    $('#emojis').empty();                
+    for (emoji in emojis) {
+        $('#emojis').append(emojis[emoji]);
+    }
+
     $('#emojis').toggle(); // #toggle
+
 }
 
 /**
@@ -102,12 +121,21 @@ function Message(text) {
 }
 
 function sendMessage() {
+
+    var text = $('#message').val();
+    if (text.length==0) {alert("please enter a message");
+    return;}
+
     // #8 Create a new message to send and log it.
     //var message = new Message("Hello chatter");
 
     // #8 let's now use the real message #input
     var message = new Message($('#message').val());
     console.log("New message:", message);
+
+    //push message into array
+    currentChannel.messages.push(message);
+    currentChannel.messageCount += 1;
 
     // #8 convenient message append with jQuery:
     $('#messages').append(createMessageElement(message));
@@ -145,17 +173,36 @@ function createMessageElement(messageObject) {
 }
 
 
-function listChannels() {
+/* comparing functions*/
+
+function compareNew (channelOne, channelTwo){
+    return (channelTwo.createdOn - channelOne.createdOn);
+}
+
+function compareTrending (channelOne, channelTwo){
+    return (channelTwo.messageCount - channelOne.messageCount);
+}
+
+function compareFavorites (channelOne, channelTwo){
+    return channelOne.starred ? -1 : 1;
+}
+
+
+function listChannels(criterion) {
     // #8 channel onload
     //$('#channels ul').append("<li>New Channel</li>")
+    channels.sort(criterion);
 
-    // #8 five new channels
-    $('#channels ul').append(createChannelElement(yummy));
-    $('#channels ul').append(createChannelElement(sevencontinents));
-    $('#channels ul').append(createChannelElement(killerapp));
-    $('#channels ul').append(createChannelElement(firstpersononmars));
-    $('#channels ul').append(createChannelElement(octoberfest));
+    $('#channels ul').empty();
+    
+for (i = 0; i < channels.length; i++) { 
+    $('#channels ul').append(createChannelElement(channels[i]));
+    }
+
+    $(currentChannel).addClass('selected');
+
 }
+
 
 /**
  * #8 This function makes a new jQuery #channel <li> element out of a given object
@@ -193,3 +240,62 @@ function createChannelElement(channelObject) {
     // return the complete channel
     return channel;
 }
+
+function CreationMode(){
+    $('#app-bar-messages').hide();
+    $('#app-bar-create').addClass('show');
+    $('#messages').empty();
+    $('#send-button').hide();
+    $('#create-button').show();
+}
+
+//constructor channel
+function Channel(name) {
+    this.name = name;
+    this.createdOn = new Date();
+    this.createdBy = currentLocation.what3words;
+    this.starred = false,
+    this.expiresIn = 60,
+    this.messageCount = 0,
+    this.messages = []
+}
+
+function createChannel(){
+
+
+var name = $('#new-channel').val();
+    //initial message
+    var text = $('#message').val();
+    // Check whether channel name input field is valid.
+    if (name.length == 0 || name.search(" ") > -1 || name.search("#") == -1) {
+        alert('Enter valid channel name! (starting with "#", no spaces)');
+        return;}
+
+    else if (text.length==0) {
+        alert('Enter a message!');
+    return;}
+
+    var channel = new Channel(name);
+    currentChannel = channel;
+    channels.push(channel);
+    $('#channels ul').append(createChannelElement(channel));
+    sendMessage();
+
+    $('#new-channel').val('');
+    abortCreationMode();
+    document.getElementById('channel-name').innerHTML = channel.name;
+        document.getElementById('channel-location').innerHTML = 'by <a href="http://w3w.co/'
+            + channel.createdBy
+            + '" target="_blank"><strong>'
+            + channel.createdBy
+            + '</strong></a>';
+
+}
+
+function abortCreationMode(){
+    $('#app-bar-messages').show();
+    $('#app-bar-create').removeClass('show');
+    $('#create-button').hide();
+    $('#send-button').show();
+}
+
